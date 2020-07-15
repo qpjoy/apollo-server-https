@@ -1,0 +1,24 @@
+{
+  "name": "apollo-server-https",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qpjoy/apollo-server-https.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qpjoy/apollo-server-https/issues"
+  },
+  "homepage": "https://github.com/qpjoy/apollo-server-https#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.15.1",
+    "express": "^4.17.1"
+  }
+}
