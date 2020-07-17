@@ -22,19 +22,32 @@ const resolvers = {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  cors: {
-    origin: "https://192.168.114.211:3000",
-    credentials: true,
-  },
 });
 
 const app = express();
 server.applyMiddleware({
   app,
   // path: "/play",
+  // cors: {
+  //   origin: "https://192.168.114.211:3000",
+  //   credentials: true,
+  // },
   cors: {
-    origin: "https://192.168.114.211:3000",
     credentials: true,
+    // origin: true,
+    origin: (origin, callback) => {
+      const whitelist = [
+        "https://192.168.114.211:3000",
+        "https://localhost:3000",
+        "https://site2.com",
+      ];
+
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   },
 });
 

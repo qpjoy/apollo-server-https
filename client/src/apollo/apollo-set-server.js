@@ -77,7 +77,7 @@ export function setClient(options) {
         // uri: options.api ? options.api : ''
         uri: options.api ? options.api : '',
         // fetch: nodeFetch
-        // credentials: 'include'
+        credentials: 'include'
       })
     ]),
   });

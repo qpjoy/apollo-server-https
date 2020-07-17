@@ -2,7 +2,7 @@ const https = require('https');
 const fs = require('fs');
 const options = {
   hostname: 'localhost',
-  port: 3001,
+  port: 3000,
   method: 'GET',
   ca: fs.readFileSync('./ca.crt'),
 };
