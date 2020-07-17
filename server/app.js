@@ -1,43 +1,62 @@
-const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
+const express = require("express");
+const { ApolloServer, gql } = require("apollo-server-express");
+const https = require("https");
+const fs = require("fs");
+const path = require("path");
 const SSL_PORT = 8443;
- 
+
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
     hello: String
   }
 `;
- 
+
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
-    hello: () => 'Hello world!',
+    hello: () => "Hello world!",
   },
 };
- 
-const server = new ApolloServer({ typeDefs, resolvers });
- 
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  cors: {
+    origin: "https://192.168.114.211:3000",
+    credentials: true,
+  },
+});
+
 const app = express();
-server.applyMiddleware({ app });
- 
+server.applyMiddleware({
+  app,
+  // path: "/play",
+  cors: {
+    origin: "https://192.168.114.211:3000",
+    credentials: true,
+  },
+});
+
 app.listen({ port: 4000 }, () =>
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 );
-https.createServer({
-    key: fs.readFileSync(path.join(__dirname, 'cert.key')),
-    cert: fs.readFileSync(path.join(__dirname, 'cert.crt'))
-  }, app)
-    .listen({ port: SSL_PORT || 4141}, () => {
-      console.log(`HTTPS server running on ${
-        true ?
-          'https://localhost:' : 'https://cors.go4.so:'}${SSL_PORT || 4141}/`)
-    }).setTimeout(780000)
-
-
+https
+  .createServer(
+    {
+      key: fs.readFileSync(path.join(__dirname, "cert.key")),
+      cert: fs.readFileSync(path.join(__dirname, "cert.crt")),
+    },
+    app
+  )
+  .listen({ port: SSL_PORT || 4141 }, () => {
+    console.log(
+      `HTTPS server running on ${
+        true ? "https://localhost:" : "https://cors.go4.so:"
+      }${SSL_PORT || 4141}/`
+    );
+  })
+  .setTimeout(780000);
 
 // import express from 'express'
 // import { ApolloServer } from 'apollo-server-express'
@@ -78,7 +97,7 @@ https.createServer({
 // // Create the HTTPS or HTTP server, per configuration
 // var server
 // if (config.ssl) {
-//   // Assumes certificates are in a .ssl folder off of the package root. Make sure 
+//   // Assumes certificates are in a .ssl folder off of the package root. Make sure
 //   // these files are secured.
 //   server = https.createServer(
 //     {

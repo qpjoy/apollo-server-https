@@ -15,15 +15,19 @@ function App() {
   try{
     let client = setClient(
       { 
-        // api:'http://192.168.114.211:4000/graphql' }
+        // api:'http://192.168.114.211:4000/graphql' 
         api:'https://192.168.114.211:8443/graphql'
       }
     );
     console.log(client);
-    client.query({
-      query: QUERY_HELLO
-    }).then((dt) => {
-      console.log(dt, ' - - -  dt1');
+    client.watchQuery({
+      query: QUERY_HELLO,
+      fetchPolicy: 'network-only'
+    }).subscribe({
+      next: ({data}) => {
+        alert(data)
+      },
+      error: (e) => alert(e)
     })
   }catch(error) {
     console.log(error);
